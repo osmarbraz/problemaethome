@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author osmar
- */
 public class ArvoreDerivacao {
 
     private String[] arvore = new String[10000];
@@ -49,8 +39,6 @@ public class ArvoreDerivacao {
     }
 
     public void caminhar(int i) {
-        //System.out.println("i="+i);
-        //System.out.println("2*i="+(2*i));
         if (i <= n) {
             caminhar(2 * i);
             System.out.println("valor=" + arvore[i - 1]);
