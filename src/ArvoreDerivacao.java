@@ -41,14 +41,14 @@ public class ArvoreDerivacao {
     public void caminhar(int i) {
         if (i <= n) {
             caminhar(2 * i);
-            System.out.println("valor=" + arvore[i - 1]);
+            System.out.println("árvore["+i+"]=" + arvore[i - 1]);
             caminhar(2 * i + 1);
         }
     }
 
     public void caminharPre(int i) {
         if (i <= n) {
-            System.out.println("valor=" + arvore[i - 1]);
+            System.out.println("árvore["+i+"]=" + arvore[i - 1]);
             caminharPre(2 * i);
             caminharPre(2 * i + 1);
         }
@@ -58,13 +58,13 @@ public class ArvoreDerivacao {
         if (i <= n) {
             caminharPos(2 * i);
             caminharPos(2 * i + 1);
-            System.out.println("valor=" + arvore[i - 1]);
+            System.out.println("árvore["+i+"]=" + arvore[i - 1]);
         }
     }
 
     public void mostrarVetor() {
         for (int i = 0; i < n; i++) {
-            System.out.println("arvore[" + i + "]=" + arvore[i]);
+            System.out.println("árvore[" + i + "]=" + arvore[i]);
         }
     }
 }

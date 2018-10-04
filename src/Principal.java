@@ -11,18 +11,17 @@ public class Principal {
         ipe.inserirFilhos("");
         ipe.inserirFilhos("AB");
 
-        System.out.println("\nCaminhar central");
+        System.out.println("\n>Caminhar central");
         ipe.caminhar(1);
 
-        System.out.println("\nCaminhar pre");
+        System.out.println("\n>Caminhar pré");
         ipe.caminharPre(1);
 
-        System.out.println("\nCaminhar pos");
+        System.out.println("\n>Caminhar pós");
         ipe.caminharPos(1);
 
-        System.out.println("\nListar vetor");
+        System.out.println("\n>Listar vetor");
         ipe.mostrarVetor();
 
     }
-
 }
