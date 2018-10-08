@@ -1,10 +1,5 @@
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class GLC {
 
@@ -15,13 +10,16 @@ public class GLC {
     //T
     private List<String> terminais;
     //Regras de Produções
-    private List<Regra> regras;
+    private List<Regra> regras;    
+    //Lista de palavras a serem testadas
+    private List<String> cadeias;
 
     public GLC(String raiz) {
         this.raiz = raiz;
         naoTerminais = new ArrayList<String>();
         terminais = new ArrayList<String>();
         regras = new ArrayList<Regra>();
+        cadeias = new ArrayList<String>();
     }
 
     public String getRaiz() {
@@ -56,6 +54,16 @@ public class GLC {
         this.regras = regras;
     }
 
+    public List<String> getCadeias() {
+        return cadeias;
+    }
+
+    public void setCadeias(List<String> cadeias) {
+        this.cadeias = cadeias;
+    }
+
+    
+    
     public void insertNaoTerminal(String naoTerminal) {
         naoTerminais.add(naoTerminal);
     }
@@ -104,7 +112,7 @@ public class GLC {
         regras.add(regra);
     }
 
-    public void listarGramatica() {
+    public void listarRegras() {
         System.out.println("Lista de Regras nde Produção");
         for (Regra regra : regras) {
             String saida = regra.getNaoTerminal() + "->";
@@ -128,6 +136,13 @@ public class GLC {
             }
         }
         return null;
+    }
+    
+     public void listarCadeias() {
+        System.out.println("Lista de Cadeias");
+        for (String cadeia : cadeias) {
+            System.out.println("->" + cadeia);
+        }
     }
 
     private String verificaMenorSubcadeia(ArrayList<String>[][] tabela, String terminal) {
@@ -187,24 +202,24 @@ public class GLC {
         //Tabela de busca
         ArrayList<String>[][] tabela = new ArrayList[n][];
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             tabela[i] = new ArrayList[n];
             for (int j = 0; j < n; ++j) {
                 tabela[i][j] = new ArrayList<String>();
             }
         }
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             //Percorre os terminais
             for (String terminal : terminais) {
-                //Pega parte da cadeia
+                //Pega parte da cadeia                
                 String parte = cadeia.charAt(i) + "";
                 //Percorre as regras
                 for (Regra itemRegra : regras) {
                     //Verifica para as regras com 1 producao
                     if (itemRegra.getRegra().length == 1) {
                         //Se é igual a parte
-                        if (itemRegra.getRegra()[0].equals(parte)) {
+                        if (itemRegra.getRegra()[0].equals(parte)) {                            
                             //Adiciona o não terminal da regra para a parte que é um terminal
                             tabela[i][i].add(itemRegra.getNaoTerminal());
                         }
@@ -214,10 +229,10 @@ public class GLC {
             }
         }
 
-        for (int subCadeia = 2; subCadeia <= n; ++subCadeia) {
-            for (int posicaoInicial = 0; posicaoInicial <= n - subCadeia; ++posicaoInicial) {
+        for (int subCadeia = 2; subCadeia <= n; subCadeia++) {
+            for (int posicaoInicial = 0; posicaoInicial <= n - subCadeia; posicaoInicial++) {
                 int posicaoFinal = posicaoInicial + subCadeia - 1;
-                for (int posicaoDivisao = posicaoInicial; posicaoDivisao <= posicaoFinal - 1; ++posicaoDivisao) {
+                for (int posicaoDivisao = posicaoInicial; posicaoDivisao <= posicaoFinal - 1; posicaoDivisao++) {
                     //Retorna os não terminais possiveis
                     String naoTerminaisPossiveis = verificaSubcadeia(tabela, posicaoInicial, posicaoFinal, posicaoDivisao);
                     if (!tabela[posicaoInicial][posicaoFinal].contains(naoTerminaisPossiveis) && !naoTerminaisPossiveis.equals("")) {
@@ -228,7 +243,8 @@ public class GLC {
             }
         }
 
-        System.out.println(imprimirMatriz(tabela, n, n));
+        //System.out.println(imprimirMatriz(tabela, n, n));
+        
         if (tabela[0][n - 1].contains(raiz)) {
             return true;
         }
@@ -262,5 +278,15 @@ public class GLC {
             return "Matriz vazia!";
         }
     }
-
+    
+    public void testarCadeias(){
+//         listarNaoTerminais();
+//         listarTerminais();                    
+//         listarRegras();
+//         listarCadeias();
+        
+        for (String cadeia : cadeias) {        
+            System.out.println("Cadeia=" + cadeia + " valida=" + validaCadeia(cadeia));
+        }
+    }
 }
