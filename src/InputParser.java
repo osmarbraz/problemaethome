@@ -1,11 +1,10 @@
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class InputParser {
 
@@ -37,66 +36,78 @@ public class InputParser {
      * fornecidas várias linhas, cada uma contendo uma palavra que desejamos
      * saber se pode ou não ser produzida a partir da raiz por meio das regras
      * de composição. #	-> A lista de palavras termina com uma linha contendo #
-     * na primeira coluna.      *
+     * na primeira coluna. *
      */
-    public List<GLC> parseInput(Reader input) throws IOException {
+    public List<GLC> parseEntrada(java.io.Reader input) throws IOException {
 
-        List<GLC> problemas = new ArrayList<>();
+        List<GLC> problemas = new ArrayList<GLC>();
 
         int tipoLinha = LINHA_RAIZ;
         GLC g = null;
 
+        //Scanner reader = new Scanner(input);
         BufferedReader reader = new BufferedReader(input);
-        while (reader.ready()) {
-            String linha = reader.readLine();
-
+        //while (reader.ready()) {
+        String linha = reader.readLine();
+        //String linha = reader.nextLine();
+        while (linha != null) {
+            //String linha = reader.readLine();
             //raiz
             if (tipoLinha == LINHA_RAIZ) {
                 g = new GLC(linha);
-                //System.out.println(">>>> raiz=" + g.getRaiz());
-
                 tipoLinha = LINHA_NAOTERMINAIS;
             } //nao terminais
             else if (tipoLinha == LINHA_NAOTERMINAIS) {
-                g.setNaoTerminais(Arrays.asList(linha.toCharArray())
-                        .stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.toList())
-                );
+                char[] parte = linha.toCharArray();
+                for (int i = 0; i < parte.length; i++) {
+                    g.insertNaoTerminal(parte[i] + "");
+                }
+
+//                g.setNaoTerminais(Arrays.asList(linha.toCharArray())
+//                        .stream()
+//                        .map(String::valueOf)
+//                        .collect(Collectors.toList())
+//                );
                 tipoLinha = LINHA_TERMINAIS;
             } //terminais
             else if (tipoLinha == LINHA_TERMINAIS) {
-//                                System.out.println("linha terminais=" + linha);
-                g.setTerminais(Arrays.asList(linha.toCharArray())
-                        .stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.toList())
-                );
+
+                char[] parte = linha.toCharArray();
+                for (int i = 0; i < parte.length; i++) {
+                    g.insertTerminal(parte[i] + "");
+                }
+
+//                g.setTerminais(Arrays.asList(linha.toCharArray())
+//                        .stream()
+//                        .map(String::valueOf)
+//                        .collect(Collectors.toList())
+//                );
                 tipoLinha = LINHA_PRODUCOES;
             } //producoes
             else if (tipoLinha == LINHA_PRODUCOES) {
                 if ("# -> #".equalsIgnoreCase(linha)) {
                     tipoLinha = LINHA_PARAVRAS;
-                } else {                    
+                } else {
                     g.insertRegra(new Regra(linha));
-                    
+
                 }
             } //palavras
             else if (tipoLinha == LINHA_PARAVRAS) {
                 if ("#".equalsIgnoreCase(linha)) {
                     tipoLinha = LINHA_RAIZ;
-                    
+
 //                    g.listarNaoTerminais();
 //                    g.listarTerminais();                    
 //                    g.listarRegras();
 //                    g.listarCadeias();
-                    
                     problemas.add(g);
                 } else {
                     //Adiciona nova cadeia de teste
                     g.getCadeias().add(linha);
                 }
             }
+            linha = reader.readLine();
+            //linha = reader.nextLine();
         }
         return problemas;
     }

@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * http://www.din.uem.br/yandre/TC/CYK-grande.pdf
+  */
 public class GLC {
 
     //Simbolo incial ou raiz
@@ -14,6 +17,11 @@ public class GLC {
     //Lista de palavras a serem testadas
     private List<String> cadeias;
 
+    /**
+     * Construtor com parâmetros.
+     * 
+     * @param raiz Simbolo raiz da gramática.
+     */
     public GLC(String raiz) {
         this.raiz = raiz;
         naoTerminais = new ArrayList<String>();
@@ -61,8 +69,6 @@ public class GLC {
     public void setCadeias(List<String> cadeias) {
         this.cadeias = cadeias;
     }
-
-    
     
     public void insertNaoTerminal(String naoTerminal) {
         naoTerminais.add(naoTerminal);
@@ -127,12 +133,10 @@ public class GLC {
 
     public Regra getTerminalTemRegra(String terminal) {
         for (Regra itemRegra : regras) {
-            //Se existe uma regra com este terminal
-            //System.out.println(">>>>>>>>>>>>> terminal=" + naoTerminal);
+            //Se existe uma regra com este terminal            
             if (itemRegra.getRegra()[0].equals(terminal)) {
                 //Retorna a regra
                 return itemRegra;
-
             }
         }
         return null;

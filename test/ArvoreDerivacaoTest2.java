@@ -16,6 +16,8 @@ import static org.junit.Assert.*;
  * @author osmar
  */
 public class ArvoreDerivacaoTest2 {
+    
+    private GLC xpto;
 
     public ArvoreDerivacaoTest2() {
     }
@@ -30,6 +32,19 @@ public class ArvoreDerivacaoTest2 {
 
     @Before
     public void setUp() {
+        xpto = new GLC("S");
+        //Regras
+        xpto.insertRegra(new Regra("S",new String[]{"A", "B"}));
+        xpto.insertRegra(new Regra("S",new String[]{"a"}));
+        xpto.insertRegra(new Regra("B",new String[]{"b"}));
+        xpto.insertRegra(new Regra("A",new String[]{"a"}));
+        //Não terminais
+        xpto.insertNaoTerminal("S");
+        xpto.insertNaoTerminal("A");
+        xpto.insertNaoTerminal("B");
+        //Terminais
+        xpto.insertTerminal("a");
+        xpto.insertTerminal("b");
     }
 
     @After
@@ -41,23 +56,6 @@ public class ArvoreDerivacaoTest2 {
         String teste = "ab";
         System.out.println("teste regra 2 - exemplo 1 " + teste);
 
-        GLC xpto = new GLC("S");
-        String[] x1 = {"A", "B"};
-        xpto.insertRegra(new Regra("S", x1));
-        String[] x2 = {"a"};
-        xpto.insertRegra(new Regra("S", x2));
-        String[] x3 = {"b"};
-        xpto.insertRegra(new Regra("B", x3));
-        String[] x4 = {"a"};
-        xpto.insertRegra(new Regra("A", x4));
-
-        xpto.insertNaoTerminal("S");
-        xpto.insertNaoTerminal("A");
-        xpto.insertNaoTerminal("B");
-
-        xpto.insertTerminal("a");
-        xpto.insertTerminal("b");
-
         boolean expResult = true;
         boolean result = xpto.validaCadeia(teste);
         assertEquals(expResult, result);
@@ -68,23 +66,6 @@ public class ArvoreDerivacaoTest2 {
         String teste = "aab";
         System.out.println("teste regra 2 - exemplo 2 " + teste);
 
-        GLC xpto = new GLC("S");
-        String[] x1 = {"A", "B"};
-        xpto.insertRegra(new Regra("S", x1));
-        String[] x2 = {"a"};
-        xpto.insertRegra(new Regra("S", x2));
-        String[] x3 = {"b"};
-        xpto.insertRegra(new Regra("B", x3));
-        String[] x4 = {"a"};
-        xpto.insertRegra(new Regra("A", x4));
-
-        xpto.insertNaoTerminal("S");
-        xpto.insertNaoTerminal("A");
-        xpto.insertNaoTerminal("B");
-
-        xpto.insertTerminal("a");
-        xpto.insertTerminal("b");
-
         boolean expResult = false;
         boolean result = xpto.validaCadeia(teste);
         assertEquals(expResult, result);
@@ -93,25 +74,7 @@ public class ArvoreDerivacaoTest2 {
     @Test
     public void testValido3() {
         String teste = "a";
-        System.out.println("teste regra2 -  exemplo 3 " + teste);
-
-        GLC xpto = new GLC("S");
-
-        String[] x1 = {"A", "B"};
-        xpto.insertRegra(new Regra("S", x1));
-        String[] x2 = {"a"};
-        xpto.insertRegra(new Regra("S", x2));
-        String[] x3 = {"b"};
-        xpto.insertRegra(new Regra("B", x3));
-        String[] x4 = {"a"};
-        xpto.insertRegra(new Regra("A", x4));
-
-        xpto.insertNaoTerminal("S");
-        xpto.insertNaoTerminal("A");
-        xpto.insertNaoTerminal("B");
-
-        xpto.insertTerminal("a");
-        xpto.insertTerminal("b");
+        System.out.println("teste regra 2 -  exemplo 3 " + teste);
 
         boolean expResult = true;
         boolean result = xpto.validaCadeia(teste);
@@ -121,29 +84,10 @@ public class ArvoreDerivacaoTest2 {
     @Test
     public void testValido4() {
         String teste = "b";
-        System.out.println("teste regra2 -  exemplo 3 " + teste);
-
-        GLC xpto = new GLC("S");
-
-        String[] x1 = {"A", "B"};
-        xpto.insertRegra(new Regra("S", x1));
-        String[] x2 = {"a"};
-        xpto.insertRegra(new Regra("B", x2));
-        String[] x3 = {"b"};
-        xpto.insertRegra(new Regra("B", x3));
-        String[] x4 = {"a"};
-        xpto.insertRegra(new Regra("A", x4));
-
-        xpto.insertNaoTerminal("S");
-        xpto.insertNaoTerminal("A");
-        xpto.insertNaoTerminal("B");
-
-        xpto.insertTerminal("a");
-        xpto.insertTerminal("b");
+        System.out.println("teste regra 2 -  exemplo 4 " + teste);
 
         boolean expResult = false;
         boolean result = xpto.validaCadeia(teste);
         assertEquals(expResult, result);
     }
-
 }
