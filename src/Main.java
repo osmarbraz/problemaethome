@@ -1,4 +1,3 @@
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -6,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class Principal {
+public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         InputParser parser = new InputParser();
@@ -21,7 +20,7 @@ public class Principal {
         for (GLC problema : problemas) {
             System.out.println("Instancia " + i);
             problema.testarCadeias();
-            i = i + 1;
+            i += 1;
             System.out.println("");
 
         }

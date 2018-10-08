@@ -1,9 +1,10 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * http://www.din.uem.br/yandre/TC/CYK-grande.pdf
-  */
+ */
 public class GLC {
 
     //Simbolo incial ou raiz
@@ -13,13 +14,13 @@ public class GLC {
     //T
     private List<String> terminais;
     //Regras de Produções
-    private List<Regra> regras;    
+    private List<Regra> regras;
     //Lista de palavras a serem testadas
     private List<String> cadeias;
 
     /**
      * Construtor com parâmetros.
-     * 
+     *
      * @param raiz Simbolo raiz da gramática.
      */
     public GLC(String raiz) {
@@ -69,7 +70,7 @@ public class GLC {
     public void setCadeias(List<String> cadeias) {
         this.cadeias = cadeias;
     }
-    
+
     public void insertNaoTerminal(String naoTerminal) {
         naoTerminais.add(naoTerminal);
     }
@@ -141,8 +142,8 @@ public class GLC {
         }
         return null;
     }
-    
-     public void listarCadeias() {
+
+    public void listarCadeias() {
         System.out.println("Lista de Cadeias");
         for (String cadeia : cadeias) {
             System.out.println("->" + cadeia);
@@ -208,28 +209,25 @@ public class GLC {
 
         for (int i = 0; i < n; i++) {
             tabela[i] = new ArrayList[n];
-            for (int j = 0; j < n; ++j) {
+            for (int j = 0; j < n; j++) {
                 tabela[i][j] = new ArrayList<String>();
             }
         }
 
         for (int i = 0; i < n; i++) {
             //Percorre os terminais
-            for (String terminal : terminais) {
-                //Pega parte da cadeia                
-                String parte = cadeia.charAt(i) + "";
-                //Percorre as regras
-                for (Regra itemRegra : regras) {
-                    //Verifica para as regras com 1 producao
-                    if (itemRegra.getRegra().length == 1) {
-                        //Se é igual a parte
-                        if (itemRegra.getRegra()[0].equals(parte)) {                            
-                            //Adiciona o não terminal da regra para a parte que é um terminal
-                            tabela[i][i].add(itemRegra.getNaoTerminal());
-                        }
+            //Pega parte da cadeia                
+            String parte = cadeia.charAt(i) + "";
+            //Percorre as regras
+            for (Regra itemRegra : regras) {
+                //Verifica para as regras com 1 producao
+                if (itemRegra.getRegra().length == 1) {
+                    //Se é igual a parte
+                    if (itemRegra.getRegra()[0].equals(parte)) {
+                        //Adiciona o não terminal da regra para a parte que é um terminal
+                        tabela[i][i].add(itemRegra.getNaoTerminal());
                     }
                 }
-
             }
         }
 
@@ -248,7 +246,6 @@ public class GLC {
         }
 
         //System.out.println(imprimirMatriz(tabela, n, n));
-        
         if (tabela[0][n - 1].contains(raiz)) {
             return true;
         }
@@ -282,19 +279,19 @@ public class GLC {
             return "Matriz vazia!";
         }
     }
-    
-    public void testarCadeias(){
+
+    public void testarCadeias() {
 //         listarNaoTerminais();
 //         listarTerminais();                    
 //         listarRegras();
 //         listarCadeias();
-        
-        for (String cadeia : cadeias) {            
-            if (validaCadeia(cadeia)){
+
+        for (String cadeia : cadeias) {
+            if (validaCadeia(cadeia)) {
                 System.out.println(cadeia + " e uma palavra valida");
             } else {
                 System.out.println(cadeia + " nao e uma palavra valida");
-            }                        
+            }
         }
     }
 }
