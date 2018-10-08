@@ -13,8 +13,13 @@ public class Principal {
 	InputParser parser = new InputParser();
 	List<GLC> problemas = parser.parseInput(new FileReader("PROGRAMA2.PP"));
 
+        //Testa as instancias
+        int i = 1;
         for (GLC problema : problemas) {
+            System.out.println("Instancia " + i);
             problema.testarCadeias();
+            i = i + 1;
+            System.out.println("");
         }
 
 //        GLC xpto = new GLC("S");

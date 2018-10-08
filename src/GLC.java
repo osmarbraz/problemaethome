@@ -285,8 +285,12 @@ public class GLC {
 //         listarRegras();
 //         listarCadeias();
         
-        for (String cadeia : cadeias) {        
-            System.out.println("Cadeia=" + cadeia + " valida=" + validaCadeia(cadeia));
+        for (String cadeia : cadeias) {            
+            if (validaCadeia(cadeia)){
+                System.out.println(cadeia + " e uma palavra valida");
+            } else {
+                System.out.println(cadeia + " nao e uma palavra valida");
+            }                        
         }
     }
 }
