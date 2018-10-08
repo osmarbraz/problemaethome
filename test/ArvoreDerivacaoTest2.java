@@ -74,7 +74,7 @@ public class ArvoreDerivacaoTest2 {
     @Test
     public void testValido3() {
         String teste = "a";
-        System.out.println("teste regra 2 -  exemplo 3 " + teste);
+        System.out.println("teste regra 2 - exemplo 3 " + teste);
 
         boolean expResult = true;
         boolean result = xpto.validaCadeia(teste);
@@ -84,7 +84,7 @@ public class ArvoreDerivacaoTest2 {
     @Test
     public void testValido4() {
         String teste = "b";
-        System.out.println("teste regra 2 -  exemplo 4 " + teste);
+        System.out.println("teste regra 2 - exemplo 4 " + teste);
 
         boolean expResult = false;
         boolean result = xpto.validaCadeia(teste);

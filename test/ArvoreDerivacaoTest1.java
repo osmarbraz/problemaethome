@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author osmar
  */
 public class ArvoreDerivacaoTest1 {
-    
+
     private GLC xpto;
 
     public ArvoreDerivacaoTest1() {
@@ -34,9 +34,9 @@ public class ArvoreDerivacaoTest1 {
     public void setUp() {
         xpto = new GLC("S");
         //Regras
-        xpto.insertRegra(new Regra("S",new String[]{"A", "B"}));
-        xpto.insertRegra(new Regra("B",new String[]{"b"}));
-        xpto.insertRegra(new Regra("A",new String[]{"a"}));
+        xpto.insertRegra(new Regra("S", new String[]{"A", "B"}));
+        xpto.insertRegra(new Regra("B", new String[]{"b"}));
+        xpto.insertRegra(new Regra("A", new String[]{"a"}));
         //Não Terminais
         xpto.insertNaoTerminal("S");
         xpto.insertNaoTerminal("A");
@@ -54,7 +54,7 @@ public class ArvoreDerivacaoTest1 {
     public void testValido1() {
         String teste = "ab";
         System.out.println("teste regra 1 - exemplo 1 " + teste);
-        
+
         boolean expResult = true;
         boolean result = xpto.validaCadeia(teste);
         assertEquals(expResult, result);
