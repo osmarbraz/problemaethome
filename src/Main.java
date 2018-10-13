@@ -124,11 +124,11 @@ public class Main {
         return resp;
     }
 
-    public static String verificaSubcadeia(String[][] tabela, List<String[]> regras, int j, int posicaoFinal, int k) {
+    public static String verificaSubcadeia(String[][] tabela, List<String[]> regras, int inicio, int meio, int fim) {
         String resp = "";
         for (int i = 0; i < regras.size(); i++) {
-            if (tabela[j][k].contains(regras.get(i)[1])) {
-                if (tabela[k + 1][posicaoFinal].contains(regras.get(i)[2])) {
+            if (tabela[inicio][meio].contains(regras.get(i)[1])) {
+                if (tabela[meio + 1][fim].contains(regras.get(i)[2])) {
                     resp = resp + regras.get(i)[0];
                 }
             }
@@ -178,14 +178,14 @@ public class Main {
         //System.out.println(imprimirMatriz(tabela, n, n));
 
         for (int i = 2; i <= n; i++) {
-            for (int j = 0; j <= n - i; j++) {
-                int meio = j + i - 1;
-                for (int k = j; k <= meio - 1; k++) {
+            for (int inicio = 0; inicio <= n - i; inicio++) {
+                int fim = inicio + i - 1;
+                for (int meio = inicio; meio <= fim - 1; meio++) {
                     // Retorna os não terminais possiveis
-                    String naoTerminaisPossiveis = verificaSubcadeia(tabela, regrasNaoTerminais, j, meio, k);
-                    if (!tabela[j][meio].contains(naoTerminaisPossiveis)) {
+                    String naoTerminaisPossiveis = verificaSubcadeia(tabela, regrasNaoTerminais, inicio, meio, fim);
+                    if (!tabela[inicio][fim].contains(naoTerminaisPossiveis)) {
                         //Adiciona o não terminal da regra na lista 
-                        tabela[j][meio] += naoTerminaisPossiveis;
+                        tabela[inicio][fim] += naoTerminaisPossiveis;
                     }
                 }
             }
