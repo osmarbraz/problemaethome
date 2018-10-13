@@ -116,7 +116,7 @@ public class Main {
 
     private static String verificaMenorSubcadeia(char[] cadeia, List<String[]> regras, int caracterCadeia) {
         String resp = "";
-        for (int i = 0; i < regras.size(); i++) {
+        for (int i = 0; i < regras.size(); ++i) {
             if (regras.get(i)[1].charAt(0) == cadeia[caracterCadeia]) {
                 resp = resp + regras.get(i)[0];
             }
@@ -126,7 +126,7 @@ public class Main {
 
     public static String verificaSubcadeia(String[][] tabela, List<String[]> regras, int inicio, int meio, int fim) {
         String resp = "";
-        for (int i = 0; i < regras.size(); i++) {
+        for (int i = 0; i < regras.size(); ++i) {
             if (tabela[inicio][meio].contains(regras.get(i)[1])) {
                 if (tabela[meio + 1][fim].contains(regras.get(i)[2])) {
                     resp = resp + regras.get(i)[0];
@@ -166,21 +166,21 @@ public class Main {
         String[][] tabela = new String[255][255];
 
         //Inicializa a matriz
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
                 tabela[i][j] = "";
             }
         }
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; ++i) {
             tabela[i][i] = verificaMenorSubcadeia(cadeia, regrasTerminais, i);
         }
         //System.out.println(imprimirMatriz(tabela, n, n));
 
-        for (int i = 2; i <= n; i++) {
+        for (int i = 2; i <= n; ++i) {
             for (int inicio = 0; inicio <= n - i; inicio++) {
                 int fim = inicio + i - 1;
-                for (int meio = inicio; meio <= fim - 1; meio++) {
+                for (int meio = inicio; meio <= fim - 1; ++meio) {
                     // Retorna os não terminais possiveis
                     String naoTerminaisPossiveis = verificaSubcadeia(tabela, regrasNaoTerminais, inicio, meio, fim);
                     if (!tabela[inicio][fim].contains(naoTerminaisPossiveis)) {
@@ -207,13 +207,13 @@ public class Main {
     public static String imprimirMatriz(String[][] M, int linhas, int colunas) {
         if (linhas != 0 || colunas != 0) {
             String saida = "";
-            for (int j = 0; j < colunas; j++) {
+            for (int j = 0; j < colunas; ++j) {
                 saida = saida + "  " + String.format("%5d", j);
             }
             saida = "n/m" + saida + "\n";
-            for (int i = 0; i < linhas; i++) {
+            for (int i = 0; i < linhas; ++i) {
                 String dados = " ";
-                for (int j = 0; j < colunas; j++) {
+                for (int j = 0; j < colunas; ++j) {
                     dados = dados + "\t" + M[i][j];
                 }
                 saida = saida + i + dados + "\n";
