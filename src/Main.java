@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.din.uem.br/yandre/TC/CYK-grande.pdf
- *
  * @author osmar
  */
 public class Main {
@@ -32,11 +30,6 @@ public class Main {
         List<String[]> regrasTerminais = new ArrayList<String[]>();
         List<String> cadeias = new ArrayList<String>();
 
-        //Declara a tabela das regras terminais e instancia as listas
-        String rt[];
-        //Declara a tabela das regras nao terminais
-        char rnt[][];
-
         //Contador de instacias
         int instancia = 1;
 
@@ -46,9 +39,6 @@ public class Main {
         //Leitura da linha
         String linha = reader.readLine();
         while ((linha != null) && (!linha.equals(""))) {
-
-            rt = new String[255];
-            rnt = new char[255][255];
 
             //raiz           
             raiz = linha;
@@ -74,14 +64,12 @@ public class Main {
                     //Lista dos regras não terminais B
                     regrasTerminais.add(new String[]{String.valueOf(regrasv[0]), String.valueOf(regrasv[5]), ""});
                     //concatena os unitários
-                    rt[regrasv[5]] += (regrasv[0]);
                 } else {
                     //Lista dos regras não terminais BC
                     regrasNaoTerminais.add(new String[]{String.valueOf(regrasv[0]),
                         String.valueOf(regrasv[5]),
                         String.valueOf(regrasv[6])});
                     //marca a matriz dos não terminais
-                    rnt[regrasv[5]][regrasv[6]] = regrasv[0];
                 }
                 linha = reader.readLine();
                 regrasv = linha.toCharArray();
@@ -97,7 +85,7 @@ public class Main {
             linha = reader.readLine();
 
             //Início dos testes das cadeias
-            testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
+            testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, regrasTerminais, regrasNaoTerminais);
 
             regrasTerminais.clear();
             regrasNaoTerminais.clear();
@@ -110,16 +98,22 @@ public class Main {
         System.out.println("Tempo gasto: " + Cronometro.tempoGasto());
     }
 
-    private static String verificaRegrasTerminais(char[] cadeia, List<String[]> regras, int caracterCadeia) {
+    /**
+     * Retorna a lista de terminais possiveis para uma posição da cadeia.
+     */
+    private static String verificaRegrasTerminais(char[] cadeia, List<String[]> regras, int posicao) {
         String resp = "";
         for (int i = 0; i < regras.size(); ++i) {
-            if (regras.get(i)[1].charAt(0) == cadeia[caracterCadeia]) {
+            if (regras.get(i)[1].charAt(0) == cadeia[posicao]) {
                 resp = resp + regras.get(i)[0];
             }
         }
         return resp;
     }
 
+    /**
+     * Retorna a lista de não terminais possiveis para as posicões da tabela.
+     */
     public static String verificaRegrasNaoTerminais(String[][] tabela, List<String[]> regras, int inicio, int meio, int fim) {
         String resp = "";
         for (int i = 0; i < regras.size(); ++i) {
@@ -132,11 +126,14 @@ public class Main {
         return resp;
     }
 
-    public static void testarCadeias(int instancia, String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, List<String> cadeias, String[] rt, char[][] rnt, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
+    /**
+     * Percorre a lista de cadeias a serem testadas.
+     */
+    public static void testarCadeias(int instancia, String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, List<String> cadeias, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
         //mensagem de saída
         System.out.printf("\nInstancia %d\n", instancia);
         for (String cadeia : cadeias) {
-            boolean resultadoCadeia = validaCadeiaVM(raiz, naoTerminais, terminais, regras, cadeia.toCharArray(), rt, rnt, regrasTerminais, regrasNaoTerminais);
+            boolean resultadoCadeia = validaCadeiaVM(raiz, naoTerminais, terminais, regras, cadeia.toCharArray(), regrasTerminais, regrasNaoTerminais);
             if (resultadoCadeia) {
                 System.out.printf("%s e uma palavra valida\n", cadeia);
             } else {
@@ -150,13 +147,12 @@ public class Main {
      *
      * Usa uma matriz bidimensional de Strings
      *
-     * Tempo gasto: 657
+     * Tempo gasto: 654
      *
      */
-    public static boolean validaCadeiaVM(String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, char[] cadeia, String[] rt, char[][] rnt, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
+    public static boolean validaCadeiaVM(String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, char[] cadeia, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
         //Tamanho da cadeia
         int n = cadeia.length;
-        int qrnt = regrasNaoTerminais.size();
 
         //Tabela de busca
         String[][] tabela = new String[n][n];
@@ -168,6 +164,7 @@ public class Main {
             }
         }
 
+        // Preenche a diagonal principal com a cadeia se sua produção inicial
         for (int i = 0; i < n; ++i) {
             tabela[i][i] = verificaRegrasTerminais(cadeia, regrasTerminais, i);
         }
