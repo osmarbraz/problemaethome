@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class Main {
 
-    //Tabela de busca
-//     String[][] tabela = new String[255][255];
     public static void main(String[] args) throws FileNotFoundException, IOException {
         //Inicio do cronômetro
         Cronometro.inicio();
@@ -112,7 +110,7 @@ public class Main {
         System.out.println("Tempo gasto: " + Cronometro.tempoGasto());
     }
 
-    private static String verificaMenorSubcadeia(char[] cadeia, List<String[]> regras, int caracterCadeia) {
+    private static String verificaRegrasTerminais(char[] cadeia, List<String[]> regras, int caracterCadeia) {
         String resp = "";
         for (int i = 0; i < regras.size(); ++i) {
             if (regras.get(i)[1].charAt(0) == cadeia[caracterCadeia]) {
@@ -122,7 +120,7 @@ public class Main {
         return resp;
     }
 
-    public static String verificaSubcadeia(String[][] tabela, List<String[]> regras, int inicio, int meio, int fim) {
+    public static String verificaRegrasNaoTerminais(String[][] tabela, List<String[]> regras, int inicio, int meio, int fim) {
         String resp = "";
         for (int i = 0; i < regras.size(); ++i) {
             if (tabela[inicio][meio].contains(regras.get(i)[1])) {
@@ -152,7 +150,7 @@ public class Main {
      *
      * Usa uma matriz bidimensional de Strings
      *
-     * Mais rápido
+     * Tempo gasto: 657
      *
      */
     public static boolean validaCadeiaVM(String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, char[] cadeia, String[] rt, char[][] rnt, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
@@ -171,26 +169,24 @@ public class Main {
         }
 
         for (int i = 0; i < n; ++i) {
-            tabela[i][i] = verificaMenorSubcadeia(cadeia, regrasTerminais, i);
+            tabela[i][i] = verificaRegrasTerminais(cadeia, regrasTerminais, i);
         }
         //System.out.println(imprimirMatriz(tabela, n, n));
 
         for (int i = 2; i <= n; ++i) {
-            for (int inicio = 0; inicio <= n - i; inicio++) {
+            for (int inicio = 0; inicio <= n - i; ++inicio) {
                 int fim = inicio + i - 1;
                 for (int meio = inicio; meio <= fim - 1; ++meio) {
                     // Retorna os não terminais possiveis
-                    String naoTerminaisPossiveis = verificaSubcadeia(tabela, regrasNaoTerminais, inicio, meio, fim);
-                    if (!tabela[inicio][fim].contains(naoTerminaisPossiveis)) {
-                        //Adiciona o não terminal da regra na lista 
-                        tabela[inicio][fim] += naoTerminaisPossiveis;
-                    }
+                    String naoTerminaisPossiveis = verificaRegrasNaoTerminais(tabela, regrasNaoTerminais, inicio, meio, fim);
+                    // Concatena os terminais possiveis para a posição inicio e fim
+                    tabela[inicio][fim] += naoTerminaisPossiveis;
                 }
             }
         }
 
 //        System.out.println(imprimirMatriz(tabela, n, n));
-        return ((tabela[0][n - 1] != null) && (tabela[0][n - 1].contains(raiz)));
+        return (tabela[0][n - 1].contains(raiz));
     }
 
     /**
