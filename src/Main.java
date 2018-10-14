@@ -17,10 +17,9 @@ public class Main {
     //Tabela de busca
 //     String[][] tabela = new String[255][255];
     public static void main(String[] args) throws FileNotFoundException, IOException {
-//        Inicio do cronômetro
-//        Cronometro.inicio();
-//        long tempoInicio = Cronometro.tempoGasto();
-//        
+        //Inicio do cronômetro
+        Cronometro.inicio();
+
         java.io.Reader input = new FileReader("et.in");
 //        java.io.Reader input = new InputStreamReader(System.in);
 
@@ -109,9 +108,8 @@ public class Main {
         }
 
         //Parada do cronômetro
-//        Cronometro.parada();
-//        long tempoFim = Cronometro.tempoGasto();
-//        System.out.println("Tempo Inicial: " + tempoInicio + " / Tempo Final: " + tempoFim);
+        Cronometro.parada();
+        System.out.println("Tempo gasto: " + Cronometro.tempoGasto());
     }
 
     private static String verificaMenorSubcadeia(char[] cadeia, List<String[]> regras, int caracterCadeia) {
@@ -138,15 +136,15 @@ public class Main {
 
     public static void testarCadeias(int instancia, String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, List<String> cadeias, String[] rt, char[][] rnt, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
         //mensagem de saída
-        System.out.println("Instancia " + instancia);
+        System.out.printf("\nInstancia %d\n", instancia);
         for (String cadeia : cadeias) {
-            if (validaCadeiaVM(raiz, naoTerminais, terminais, regras, cadeia.toCharArray(), rt, rnt, regrasTerminais, regrasNaoTerminais)) {
-                System.out.println(cadeia + " e uma palavra valida");
+            boolean resultadoCadeia = validaCadeiaVM(raiz, naoTerminais, terminais, regras, cadeia.toCharArray(), rt, rnt, regrasTerminais, regrasNaoTerminais);
+            if (resultadoCadeia) {
+                System.out.printf("%s e uma palavra valida\n", cadeia);
             } else {
-                System.out.println(cadeia + " nao e uma palavra valida");
+                System.out.printf("%s nao e uma palavra valida\n", cadeia);
             }
         }
-        System.out.println("");
     }
 
     /**
@@ -163,7 +161,7 @@ public class Main {
         int qrnt = regrasNaoTerminais.size();
 
         //Tabela de busca
-        String[][] tabela = new String[255][255];
+        String[][] tabela = new String[n][n];
 
         //Inicializa a matriz
         for (int i = 0; i < n; ++i) {
@@ -195,7 +193,6 @@ public class Main {
         return ((tabela[0][n - 1] != null) && (tabela[0][n - 1].contains(raiz)));
     }
 
-   
     /**
      * Gera uma string formatada com os dados Matriz M.
      *
@@ -222,5 +219,5 @@ public class Main {
         } else {
             return "Matriz vazia!";
         }
-    }    
+    }
 }
