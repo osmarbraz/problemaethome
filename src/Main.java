@@ -38,7 +38,7 @@ public class Main {
 
         //Leitura da linha
         String linha = reader.readLine();
-        while ((linha != null) && (!linha.equals(""))) {
+        while ((linha != null)) {
 
             //raiz           
             raiz = linha;
@@ -147,7 +147,7 @@ public class Main {
      *
      * Usa uma matriz bidimensional de Strings
      *
-     * Tempo gasto: 654
+     * Tempo gasto: 320
      *
      */
     public static boolean validaCadeiaVM(String raiz, char[] naoTerminais, char[] terminais, List<String[]> regras, char[] cadeia, List<String[]> regrasTerminais, List<String[]> regrasNaoTerminais) {
